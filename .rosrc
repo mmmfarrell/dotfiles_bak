@@ -1,0 +1,27 @@
+source set_ros_master local
+
+# Turtlebot
+#source set_ros_master 192.168.0.115
+#export ROS_IP=192.168.0.117
+#export ROS_HOSTNAME=192.168.0.117
+
+#source set_ros_master 192.168.0.117
+#export ROS_IP=192.168.0.114
+#export ROS_HOSTNAME=192.168.0.114
+
+
+export ROSLAUNCH_SSH_UNKNOWN=1
+
+# ROS_WORKSPACE
+source /opt/ros/kinetic/setup.bash
+#source ~/rel_nav_ws/devel/setup.bash
+
+#source ~/auvsi/ground_ws/devel/setup.bash
+
+#source ~/magicc/boat_ws/devel/setup.bash
+#source ~/magicc/copter_ws/devel/setup.bash
+#source ~/magicc/rosflight_ws/devel/setup.bash
+#source ~/magicc/offset_ws/devel/setup.bash
+#source ~/magicc/relest_ws/devel/setup.bash
+source ~/gradschool/Winter18/robotic_vision/turtle_ws/devel/setup.bash
+
