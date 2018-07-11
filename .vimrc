@@ -5,7 +5,8 @@ filetype off                  " required
 set relativenumber
 set number
 
-set tags=tags
+"set tags=~/shining_software/tags
+set tags=~/tags
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -30,6 +31,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'honza/vim-snippets'
 Plugin 'taketwo/vim-ros'
 Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -43,8 +45,9 @@ syntax on
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set t_Co=256
+"set t_Co=256
 colorscheme gruvbox
+"colorscheme parsec
 set background=dark
 
 let mapleader = "\\"
@@ -64,10 +67,17 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ycm :vsplit ~/.vim/.ycm_extra_conf.py<cr>
 
 " Mappings to move between panes
-nnoremap <leader>l <C-W><C-L>
-nnoremap <leader>h <C-W><C-H>
-nnoremap <leader>j <C-W><C-J>
-nnoremap <leader>k <C-W><C-K>
+nnoremap <C-A>l <C-W><C-L>
+nnoremap <C-A>h <C-W><C-H>
+nnoremap <C-A>j <C-W><C-J>
+nnoremap <C-A>k <C-W><C-K>
+"nnoremap <leader>h <C-W><C-H>
+"nnoremap <leader>j <C-W><C-J>
+"nnoremap <leader>k <C-W><C-K>
+"nnoremap <leader>l <C-W><C-L>
+"nnoremap <leader>h <C-W><C-H>
+"nnoremap <leader>j <C-W><C-J>
+"nnoremap <leader>k <C-W><C-K>
 
 " Mapping for jumping
 nnoremap <S-Tab> <C-O>
@@ -91,13 +101,31 @@ vnoremap H 0
 nnoremap J 10j
 nnoremap K 10k
 vnoremap J 10j
-
 vnoremap K 10k
 
 " Mappings for tree list netrw
-nnoremap <leader>ex :Vex <CR>
+"nnoremap <leader>ex :Vex <CR>
+nnoremap <leader>ex :NERDTree <CR>
 let g:netrw_banner = 0
 let g:netrw_winsize = 20
+
+" Mappings for ctags
+" Ctrl + \ - open def in new tab
+" Alt + ] - open def in vertical split
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>"
+
+" Mappings for vim tabs
+" Ctrl + Left - previous tab
+" Ctrl + Right - next tab
+" Ctrl + n - new tab
+map <C-h> <Esc>:tabprev<CR>
+map <C-l> <Esc>:tabnext<CR>
+map <C-n> <Esc>:tabnew<CR>
+
+" NerdTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 autocmd FileType make set noexpandtab softtabstop=0
 

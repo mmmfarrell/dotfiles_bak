@@ -85,7 +85,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -139,38 +139,12 @@ alias sublime='sublime_text'
 
 source ~/.rosrc
 source ~/.rosalias
-export PATH=$PATH:/opt/sublime-text
-alias sub=sublime-text
-export PATH=$PATH:/opt/pycharm-community-2017.1.1/bin
-
-
-# My aliases for convenience
-alias sthor='ssh thor@192.168.0.108'
-alias scap='ssh captjack@192.168.0.158'
 
 alias scanip="nmap -sP 192.168.0.*"
-export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin
 alias untar="tar -xvzf"
 
-alias flashnaze='stm32flash -w ~/magicc/rosflight_ws/src/naze32.hex -v -g 0x0 -b 921600 /dev/ttyUSB0'
-
-alias tenboard='tensorboard --logdir="."'
-alias supercomp='ssh waffles@ssh.fsl.byu.edu'
-
-alias cdros="cd `echo $ROS_PACKAGE_PATH | awk -Fsrc: '{print $1}'`/src"
-alias ros_make="(cd `echo $ROS_PACKAGE_PATH | awk -Fsrc: '{print $1}'` && catkin_make -DCMAKE_BUILD_TYPE=Release)"
-
-# CUDA Path Stuff
-#export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64/
-
-#export PATH=/usr/lib/ccache:$PATH
-#export PYTHONPATH="${PYTHONPATH}:/usr/local/lib/python2.7/dist-packages"
-#export PYTHONPATH="${PYTHONPATH}:~/.local/lib/python2.7/site-packages"
-
-# Holodeck stuff
-export HOLODECKPATH="/usr/local/Holodeck"
-export PYTHONPATH="${HOLODECKPATH}:${PYTHONPATH}"
-
-#alias rws='export ROS_WORKSPACE=$(pwd)'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+source /opt/ros/indigo/setup.bash
+
+source ~/shining_software/use_repo.sh
+[[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
