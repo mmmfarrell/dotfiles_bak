@@ -17,6 +17,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 Plugin 'tpope/vim-fugitive'
@@ -90,12 +91,6 @@ nmap <leader>ga <Plug>GitGutterStageHunk
 nmap <leader>gd <Plug>GitGutterPreviewHunk
 nmap <leader>gj <Plug>GitGutterNextHunk
 nmap <leader>gk <Plug>GitGutterPrevHunk
-
-" Mappings to go to end of line and beginning of line
-nnoremap L $
-vnoremap L $
-nnoremap H 0
-vnoremap H 0
 
 " Mappings to move up and down faster
 nnoremap J 10j

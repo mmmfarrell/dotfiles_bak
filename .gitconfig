@@ -1,6 +1,6 @@
 [user]
-    name = michael
-    email = michaeldavidfarrell@gmail.com
+	name = Michael Farrell
+    email = c_farrell@braincorporation.com
 [push]
 	default = simple
 [alias]
@@ -8,3 +8,5 @@
 	st = status
 	ct = commit
 	subup = submodule update --init --recursive
+[core]
+	editor = vim
