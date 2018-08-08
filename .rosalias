@@ -1,1 +1,0 @@
-alias fixCMake="rm CMakeLists.txt && cp /opt/ros/kinetic/share/catkin/cmake/toplevel.cmake CMakeLists.txt"

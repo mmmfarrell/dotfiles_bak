@@ -85,7 +85,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -113,64 +113,44 @@ if ! shopt -oq posix; then
   fi
 fi
 
+#####################################################################
+##### My stuff ######################################################
+#####################################################################
+# Add local lib to path
+# do I need this?
+#libpathadd() {
+    #if [ -d "$1" ] && [[ ":$LD_LIBRARY_PATH:" != *":$1:"* ]]; then
+        #LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+"$LD_LIBRARY_PATH:"}$1"
+    #fi
+#}
+#libpathadd "/usr/local/lib"
+
+# Make prompt nice
 export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1='\[\033[01;32m\]\u\[\033[01;34m\] \w\[\033[00;33m\]$(__git_ps1)\[\033[01;32m\] \$\[\033[00m\] '
 
+# Aliases
+
+# Easy edit/source
 alias sbash='source ~/.bashrc'
 alias vbash='vim ~/.bashrc'
-alias vros='vim ~/.rosrc'
 
-libpathadd() {
-	    if [ -d "$1" ] && [[ ":$LD_LIBRARY_PATH:" != *":$1:"* ]]; then
-			        LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+"$LD_LIBRARY_PATH:"}$1"
-					    fi
-}
-libpathadd "/usr/local/lib"
-
-
-#Add Sublime to Path
-PATH=$PATH:/opt/sublime_text
-export PATH
-
-alias sub='sublime_text'
-alias sublime='sublime_text'
-#alias rm=trash
-
-
-source ~/.rosrc
-source ~/.rosalias
-export PATH=$PATH:/opt/sublime-text
-alias sub=sublime-text
-export PATH=$PATH:/opt/pycharm-community-2017.1.1/bin
-
-
-# My aliases for convenience
-alias sthor='ssh thor@192.168.0.108'
-alias scap='ssh captjack@192.168.0.158'
-
+# Find all ips on network
 alias scanip="nmap -sP 192.168.0.*"
-export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin
+
+# Cuz I always forget how to untar
 alias untar="tar -xvzf"
 
-alias flashnaze='stm32flash -w ~/magicc/rosflight_ws/src/naze32.hex -v -g 0x0 -b 921600 /dev/ttyUSB0'
-
-alias tenboard='tensorboard --logdir="."'
-alias supercomp='ssh waffles@ssh.fsl.byu.edu'
-
-alias cdros="cd `echo $ROS_PACKAGE_PATH | awk -Fsrc: '{print $1}'`/src"
-alias ros_make="(cd `echo $ROS_PACKAGE_PATH | awk -Fsrc: '{print $1}'` && catkin_make -DCMAKE_BUILD_TYPE=Release)"
-
-# CUDA Path Stuff
-#export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64/
-
-#export PATH=/usr/lib/ccache:$PATH
-#export PYTHONPATH="${PYTHONPATH}:/usr/local/lib/python2.7/dist-packages"
-#export PYTHONPATH="${PYTHONPATH}:~/.local/lib/python2.7/site-packages"
-
-# Holodeck stuff
-export HOLODECKPATH="/usr/local/Holodeck"
-export PYTHONPATH="${HOLODECKPATH}:${PYTHONPATH}"
-
-#alias rws='export ROS_WORKSPACE=$(pwd)'
+# Deal with my dot files
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# Generate ctags for everything in your home dir
+alias gen_ctags='ctags -R -f ~/.tags ~/.'
+
+#source ~/.rosrc
+
+
+
+
+
+

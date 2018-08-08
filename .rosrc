@@ -25,3 +25,14 @@ source /opt/ros/kinetic/setup.bash
 #source ~/magicc/relest_ws/devel/setup.bash
 source ~/gradschool/Winter18/robotic_vision/turtle_ws/devel/setup.bash
 
+# My aliases for ROS
+alias vros='vim ~/.rosrc'
+
+# Go to ros ws/src
+alias cdros="cd `echo $ROS_PACKAGE_PATH | awk -Fsrc: '{print $1}'`/src"
+
+# catkin make release mode from anywhere
+alias ros_make="(cd `echo $ROS_PACKAGE_PATH | awk -Fsrc: '{print $1}'` && catkin_make -DCMAKE_BUILD_TYPE=Release)"
+
+# This is for QtCreator
+alias fixCMake="rm CMakeLists.txt && cp /opt/ros/kinetic/share/catkin/cmake/toplevel.cmake CMakeLists.txt"
