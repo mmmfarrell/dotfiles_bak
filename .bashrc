@@ -148,9 +148,3 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias gen_ctags='ctags -R -f ~/.tags ~/.'
 
 #source ~/.rosrc
-
-
-
-
-
-
