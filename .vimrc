@@ -117,10 +117,10 @@ set ic
 set smartcase
 
 " highlight search
-set hls
+"set hls
 
 " Make search act like search in modern browsers
-set incsearch 
+"set incsearch
 
 " Don't redraw while executing macros
 set lazyredraw 
@@ -134,13 +134,16 @@ set ruler
 " 80 character per line
 set textwidth=80
 
+" Highlight one column after limit
+set colorcolumn=+1
+
 " for clearing search
-nmap <silent> <leader>/ :nohlsearch<CR>
+"nmap <silent> <leader>/ :nohlsearch<CR>
 
 " enable mouse support if we have it
-if has('mouse')
-  set mouse=a
-endif
+"if has('mouse')
+  "set mouse=a
+"endif
 
 "set wildmenu" enables a menu at the bottom of the vim/gvim window.
 "The meaning of "list:longest,full" is so that when you do completion in the
@@ -161,14 +164,18 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " Some leftover stuff that might be relvant
 "autocmd FileType make set noexpandtab softtabstop=0
 
-"augroup cpp
-  "autocmd!
-  "set tabstop=2
-  "set shiftwidth=2
-"augroup END
+augroup cpp
+  autocmd!
+  set tabstop=2
+  set shiftwidth=2
+augroup END
 
 "au FileType c,cpp setlocal comments-=:// comments+=f://
-"inoremap {<CR> {<CR>}<Esc>ko
+inoremap {<CR> {<CR>}<Esc>ko
+
+" Clang-format
+map <C-K> :pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
+imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
 
 " =============================================================================
 " Plugin Config
@@ -205,4 +212,5 @@ let g:airline_powerline_fonts = 1
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
 
