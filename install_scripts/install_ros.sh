@@ -1,4 +1,5 @@
 # Install ROS Kinetic. Following steps from http://wiki.ros.org/kinetic/Installation/Ubuntu 
+. basic_setup.sh
 
 # Setup sources.list
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
