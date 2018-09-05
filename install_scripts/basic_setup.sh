@@ -18,7 +18,8 @@ config checkout
 config config status.showUntrackedFiles no
 
 # Install the things you need
-sudo apt-get -y install tmux vim-nox-py2 fonts-powerline
+sudo apt-get -y install tmux vim-gtk3-py2 fonts-powerline
+sudo update-alternatives --set vim /usr/bin/vim.gtk3-py2
 
 # Install vim plugins
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
