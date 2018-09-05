@@ -1,5 +1,6 @@
 
 # Download git, clone this repo anywhere except your home dir
+. install_ros.sh
 
 # Setup dot files
 git clone --bare https://github.com/mmmfarrell/dotfiles.git $HOME/.cfg
