@@ -1,21 +1,18 @@
 " Neovim init.vim
 " author: Michael Farrell
 " contact: michaeldavidfarrell@gmail.com
-" date: Oct 15 2018
+" date: Oct 19 2018
 
 " vim-plug plugin manager
 call plug#begin('~/.config/nvim/plugged')
 
 " Typing
+Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Raimondi/delimitMate'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -72,7 +69,7 @@ set relativenumber
 set number
 
 " Show gutter
-set signcolumn=yes
+"set signcolumn=yes
 
 " Always display status bar
 set laststatus=2
@@ -101,8 +98,8 @@ set textwidth=80
 set colorcolumn=+1
 
 " tabs are four spaces, smart tabbing
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set smarttab
 
@@ -110,6 +107,7 @@ augroup cpp
   autocmd!
   set tabstop=2
   set shiftwidth=2
+  set softtabstop=0
   set nosmartindent
 augroup END
 
@@ -151,29 +149,28 @@ map <C-K> :pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
 imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
 
 """"""""""" Plugins """"""""""""""""""
-" Language Client
-let g:LanguageClient_serverCommands = {
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
-    \ }
+"" ALE
+" Use LSP linters
+" Install cquery https://github.com/cquery-project/cquery
+" Install pyls https://github.com/palantir/python-language-server
+let b:ale_linters = {'cpp': ['cquery'], 'python':['pyls']}
+let g:ale_completion_enabled = 1
+let g:ale_sign_column_always = 1
 
-" Use an absolute configuration path if you want system-wide settings
-let g:LanguageClient_loadSettings = 1
-let g:LanguageClient_settingsPath = '/home/mmmfarrell/.config/nvim/settings.json'
-set completefunc=LanguageClient#complete
-set formatexpr=LanguageClient_textDocument_rangeFormatting()
+" Show errors in airline status bar
+let g:airline#extensions#ale#enabled = 1
 
-nnoremap <silent> gh :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> gs :call LanguageClient#textDocument_documentSymbol()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+"" Scroll through autocomplete options with Tab
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Use Ale to jumpy to definition, etc.
+nnoremap <silent> gh :ALEHover<CR>
+nnoremap <silent> gd :ALEGoToDefinition<CR>
+nnoremap <silent> gr :ALEFindReferences<CR>
 
 " Deoplete
+" This is only here for UltiSnips, should find a way to do snippets with ALE
 let g:deoplete#enable_at_startup = 1
-" Scroll through autocomplete options with Tab
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " UltiSnips
 " Ctrl + j to expand snippets and Ctrl+j/Ctrl+k to move forward, back
@@ -199,3 +196,7 @@ let g:airline_theme = "dark"
 " and then loaded by tmux on startup. That way your tmux always looks nice, not
 " just after you start vim.
 let g:airline#extensions#tmuxline#enabled = 0
+
+" Load all plugins now, generate help tags, errors and messages ignored
+packloadall
+silent! helptags ALL
