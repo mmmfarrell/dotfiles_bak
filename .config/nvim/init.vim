@@ -8,7 +8,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 " Typing
 Plug 'w0rp/ale'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
@@ -97,25 +96,25 @@ set textwidth=80
 " Highlight one column after limit
 set colorcolumn=+1
 
-" tabs are four spaces, smart tabbing
-set tabstop=2
-set shiftwidth=2
+" spaces everywhere, indents are 4 spaces
+set tabstop=8
+set softtabstop=0
 set expandtab
+set shiftwidth=2
+"set shiftwidth=4 " Why does this keep resetting?
 set smarttab
 
 augroup cpp
   autocmd!
-  set tabstop=2
+  " In c++ indents are 2 spaces
   set shiftwidth=2
-  set softtabstop=0
-  set nosmartindent
 augroup END
 
 augroup py
   autocmd!
+  " In python tab characters appear as 4 spaces, indents are 4 spaces
   set tabstop=4
   set shiftwidth=4
-  set nosmartindent
 augroup END
 
 " Don't assume I want a line comment after another line comment
@@ -156,6 +155,11 @@ imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
 let b:ale_linters = {'cpp': ['cquery'], 'python':['pyls']}
 let g:ale_completion_enabled = 1
 let g:ale_sign_column_always = 1
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_echo_msg_error_str = '✖'
+let g:ale_echo_msg_warning_str = '⚠'
+let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
 
 " Show errors in airline status bar
 let g:airline#extensions#ale#enabled = 1
@@ -168,15 +172,18 @@ nnoremap <silent> gh :ALEHover<CR>
 nnoremap <silent> gd :ALEGoToDefinition<CR>
 nnoremap <silent> gr :ALEFindReferences<CR>
 
-" Deoplete
-" This is only here for UltiSnips, should find a way to do snippets with ALE
-let g:deoplete#enable_at_startup = 1
-
 " UltiSnips
 " Ctrl + j to expand snippets and Ctrl+j/Ctrl+k to move forward, back
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" FZF
+" leader + f to search files
+" Ctrl+t, Ctrl+x, Ctrl+v to open in tab, split, vsplit
+nnoremap <leader>f :Files<CR>
+" leader + us (for UltiSnips) to insert a snippet
+nnoremap <leader>us :Snippets<CR>
 
 " NerdTree
 " Start nerdtree if start vim with no file specified
