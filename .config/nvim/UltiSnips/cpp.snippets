@@ -1,0 +1,101 @@
+priority -1
+
+snippet node "entire cpp file for ros node"
+#include <ros/ros.h>
+#include "pbvs_controller/ros_pbvs.h"
+
+int main(int argc, char** argv)
+{
+  ros::init(argc, argv, "pbvs_controller");
+
+  pbvs::RosPBVS ros_pvbs;
+
+  ros::spin();
+
+  return 0;
+}
+endsnippet
+
+snippet rosh "entire .h file for a ros class"
+#ifndef ROS_PBVS_H
+#define ROS_PBVS_H
+
+#include <ros/ros.h>
+
+namespace pbvs
+{
+class RosPBVS
+{
+public:
+  RosPBVS();
+
+private:
+  ros::NodeHandle nh_, nh_private_;
+  ros::Publisher command_pub_;
+  ros::Subscriber full_state_sub_;
+
+  void setupPublishers();
+  void setupSubscribers();
+  void publishAngleCommand();
+
+  void fullStateCallback(const nav_msgs::Odometry &msg);
+};
+}  // namespace pbvs
+
+#endif /* ROS_PBVS_H */
+endsnippet
+
+snippet roscpp "entire .cpp file for a ros class"
+#include <ros/ros.h>
+#include <nav_msgs/Odometry.h>
+
+#include "pbvs_controller/ros_pbvs.h"
+
+namespace pbvs
+{
+RosPBVS::RosPBVS() :
+  nh_(ros::NodeHandle()),
+  nh_private_("~")
+{
+  this->setupPublishers();
+  this->setupSubscribers();
+}
+
+void RosPBVS::setupPublishers()
+{
+  std::string command_topic = "command";
+  int command_queue_size = 10;
+  command_pub_ =
+      nh_.advertise<rosflight_msgs::Command>(command_topic, command_queue_size);
+}
+
+void RosPBVS::setupSubscribers()
+{
+  std::string full_state_topic = "NED_estimate";
+  int full_state_queue = 10;
+  full_state_sub_ = nh_.subscribe(full_state_topic, full_state_queue,
+                                  &RosPBVS::fullStateCallback, this);
+}
+
+void RosPBVS::publishAngleCommand()
+{
+  command_msg_.header.stamp = ros::Time::now();
+  command_msg_.mode = rosflight_msgs::Command::MODE_ROLL_PITCH_YAWRATE_THROTTLE;
+  command_msg_.ignore = rosflight_msgs::Command::IGNORE_NONE;
+  command_msg_.x = current_control_[0];
+  command_msg_.y = current_control_[1];
+  command_msg_.z = current_control_[2];
+  command_msg_.F = current_control_[3];
+
+  command_pub_.publish(this->command_msg_);
+}
+
+void RosPBVS::fullStateCallback(const nav_msgs::Odometry &msg)
+{
+  double current_time = msg.header.stamp.toSec();
+}
+}  // namespace pbvs
+
+endsnippet
+
+# vim:ft=snippets:

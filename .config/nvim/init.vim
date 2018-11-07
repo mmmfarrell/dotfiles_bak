@@ -12,6 +12,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Raimondi/delimitMate'
+Plug 'taketwo/vim-ros'
 
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -110,12 +111,12 @@ augroup cpp
   set shiftwidth=2
 augroup END
 
-augroup py
-  autocmd!
-  " In python tab characters appear as 4 spaces, indents are 4 spaces
-  set tabstop=4
-  set shiftwidth=4
-augroup END
+"augroup py
+  "autocmd!
+  "" In python tab characters appear as 4 spaces, indents are 4 spaces
+  "set tabstop=4
+  "set shiftwidth=4
+"augroup END
 
 " Don't assume I want a line comment after another line comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -173,10 +174,17 @@ nnoremap <silent> gd :ALEGoToDefinition<CR>
 nnoremap <silent> gr :ALEFindReferences<CR>
 
 " UltiSnips
+let g:UltiSnipsSnippetDirectories=
+  \ ["/home/mmmfarrell/.config/nvim/plugged/vim-snippets/UltiSnips",
+  \ "/home/mmmfarrell/.config/nvim/UltiSnips"]
 " Ctrl + j to expand snippets and Ctrl+j/Ctrl+k to move forward, back
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" Vim-ROS
+" Open .h/.cpp in a vsplit
+command! -nargs=0 AV exec ':vsplit | A'
 
 " FZF
 " leader + f to search files
@@ -187,8 +195,8 @@ nnoremap <leader>us :Snippets<CR>
 
 " NerdTree
 " Start nerdtree if start vim with no file specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Open/Close NerdTree with Ctrl + N
 map <C-n> :NERDTreeToggle<CR>
 
