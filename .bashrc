@@ -136,7 +136,7 @@ alias sbash='source ~/.bashrc'
 alias vbash='vim ~/.bashrc'
 
 # Find all ips on network
-alias scanip="nmap -sP 192.168.0.*"
+alias scanip="nmap -sP 192.168.1.*"
 
 # Cuz I always forget how to untar
 alias untar="tar -xvzf"
@@ -147,4 +147,16 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # Generate ctags for everything in your home dir
 alias gen_ctags='ctags -R -f ~/.tags ~/.'
 
-#source ~/.rosrc
+# For Cuda crap
+export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+# Neovim
+alias vim='nvim'
+alias vi='nvim'
+
+source ~/.rosrc
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+alias drone='ssh nvidia@192.168.1.122'

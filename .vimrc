@@ -17,6 +17,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/nerdtree'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'vim-scripts/a.vim'
+
 
 " Plugins not currently used
 "Plugin 'taketwo/vim-ros'
@@ -66,8 +69,8 @@ filetype indent on
 set laststatus=2
 
 " swp files are the worst, disable them
- set nobackup
- set noswapfile
+set nobackup
+set noswapfile
 
 " Make backspace work right
 set backspace=indent,eol,start
@@ -117,10 +120,10 @@ set ic
 set smartcase
 
 " highlight search
-"set hls
+set nohls
 
 " Make search act like search in modern browsers
-"set incsearch
+set noincsearch
 
 " Don't redraw while executing macros
 set lazyredraw 
@@ -168,9 +171,18 @@ augroup cpp
   autocmd!
   set tabstop=2
   set shiftwidth=2
+  set nosmartindent
 augroup END
 
-"au FileType c,cpp setlocal comments-=:// comments+=f://
+augroup py
+  autocmd!
+  set tabstop=4
+  set shiftwidth=4
+  set nosmartindent
+augroup END
+
+autocmd FileType cpp setlocal ts=2 sts=2 sw=2
+au FileType c,cpp setlocal comments-=:// comments+=f://
 inoremap {<CR> {<CR>}<Esc>ko
 
 " Clang-format
@@ -184,8 +196,9 @@ imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
 " ===============================================
 " YouCompleteMe
 " Mapping to edit ~/.vim/.ycm_extra_conf.py
-nnoremap <leader>ycm :vsplit ~/.vim/.ycm_extra_conf.py<cr>
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+"nnoremap <leader>ycm :vsplit ~/.vim/.ycm_extra_conf.py<cr>
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+nnoremap <c-]> :YcmCompleter GoTo<CR>
 
 " ===============================================
 " NerdTree
@@ -212,5 +225,9 @@ let g:airline_powerline_fonts = 1
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
+"
+" ===============================================
+" Tmuxline
+let g:airline#extensions#tmuxline#enabled = 0
+let g:tmuxline_theme = 'jellybeans'
 

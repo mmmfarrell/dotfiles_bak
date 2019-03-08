@@ -13,6 +13,7 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Raimondi/delimitMate'
 Plug 'taketwo/vim-ros'
+Plug 'lervag/vimtex'
 
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -90,6 +91,9 @@ set magic
 
 " show the cursor position all the time
 set ruler   
+
+" fold method syntax automatically folds functions, etc
+set foldmethod=syntax
 
 " 80 character per line
 set textwidth=80
@@ -192,6 +196,8 @@ command! -nargs=0 AV exec ':vsplit | A'
 nnoremap <leader>f :Files<CR>
 " leader + us (for UltiSnips) to insert a snippet
 nnoremap <leader>us :Snippets<CR>
+" Silver searcher to grep into all files in current path (ignoring .gitignore files)
+nnoremap <leader>ag :Ag<CR>
 
 " NerdTree
 " Start nerdtree if start vim with no file specified
