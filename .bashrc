@@ -151,11 +151,7 @@ alias gen_ctags='ctags -R -f ~/.tags ~/.'
 export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-# Neovim
-alias vim='nvim'
-alias vi='nvim'
-
-source ~/.rosrc
+#source ~/.rosrc
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

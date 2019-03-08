@@ -1,69 +1,76 @@
-" Plugin Management
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Vim 8 .vimrc
+" author: Michael Farrell
+" contact: michaeldavidfarrell@gmail.com
+" date: Mar 7 2019
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" vim-plug plugin manager
+call plug#begin('~/.config/nvim/plugged')
 
-" Keep Plugin commands between vundle#begin/end.
-Plugin 'flazz/vim-colorschemes'
-Plugin 'lervag/vimtex'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-airline/vim-airline'
-Plugin 'SirVer/ultisnips'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'honza/vim-snippets'
-Plugin 'Raimondi/delimitMate'
-Plugin 'scrooloose/nerdtree'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'vim-scripts/a.vim'
+" Typing
+Plug 'w0rp/ale'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Raimondi/delimitMate'
+"Plug 'taketwo/vim-ros'
+Plug 'lervag/vimtex'
 
+" Multi-entry selection UI. FZF
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
-" Plugins not currently used
-"Plugin 'taketwo/vim-ros'
-"Plugin 'tpope/vim-fugitive'
-"Plugin 'tpope/vim-rhubarb'
+" Utils
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/a.vim'
+Plug 'airblade/vim-gitgutter'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-set completeopt-=preview
+" Style
+Plug 'morhetz/gruvbox'
+Plug 'vim-airline/vim-airline'
+Plug 'edkolev/tmuxline.vim'
 
-" Escape Mappings for insert and visual modes
-inoremap jk <esc>
-vnoremap jk <esc>
+call plug#end()
 
-" Mapping for jumping
-nnoremap <S-Tab> <C-O>
-
-" Mappings to move up and down faster
-nnoremap J 10j
-nnoremap K 10k
-vnoremap J 10j
-vnoremap K 10k
-
-" Colorscheme
-let g:gruvbox_contrast_dark="hard"
-set background=dark
-colorscheme gruvbox
-set t_Co=256 " to get 256 colors if not default
-
-" Set space for the leader
-let mapleader = "\\"
-nmap <space> <leader>
-vmap <space> <leader>
-
-" Be improved
-set nocompatible
-set relativenumber
-set number
-
+"""""""" Custom Settings """"""""""""""
 " syntax highlighting and filetype specific features
 syntax on
 filetype on
 filetype plugin on
 filetype indent on
+
+" Always copy and paste to clipboard
+set clipboard+=unnamedplus
+
+" Use xclip for clipboard
+" sudo apt install xclip
+let g:clipboard = {
+  \   'name': 'xclip-xfce4-clipman',
+  \   'copy': {
+  \      '+': 'xclip -selection clipboard',
+  \      '*': 'xclip -selection clipboard',
+  \    },
+  \   'paste': {
+  \      '+': 'xclip -selection clipboard -o',
+  \      '*': 'xclip -selection clipboard -o',
+  \   },
+  \   'cache_enabled': 1,
+  \ }
+
+" Colorscheme
+set termguicolors
+let g:gruvbox_contrast_dark="hard"
+set background=dark
+colorscheme gruvbox
+
+" Be improved
+set nocompatible
+
+" Relative line numbering with absolute line number on current line
+set relativenumber
+set number
+
+" Show gutter
+"set signcolumn=yes
 
 " Always display status bar
 set laststatus=2
@@ -72,58 +79,10 @@ set laststatus=2
 set nobackup
 set noswapfile
 
-" Make backspace work right
-set backspace=indent,eol,start
-
-" Ctags stuff, map to generate tags
-" Note your screen will show ctags output until 
-" killed or finished
-set tags=~/.tags
-map <leader>gen <CR>:!ctags -R -f ~/.tags ~/.<CR>
-
-" Mappings for ctags
-" Ctrl + \ - open def in new tab
-" Alt + ] - open def in vertical split
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>"
-
-" Mappings for vim tabs
-" Ctrl + Left - previous tab
-" Ctrl + Right - next tab
-" Ctrl + n - new tab
-map <C-h> <Esc>:tabprev<CR>
-map <C-l> <Esc>:tabnext<CR>
-map <C-n> <Esc>:tabnew<CR>
-
-" tabs are four spaces, smart tabbing
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set smarttab
-
-" smart and auto indent
-set autoindent
-set smartindent
-
-" Show matching brackets
-set showmatch
-
-" Wrap long lines
-set wrap
-
-" Case insensitive search
-set ic
-
-"When 'ignorecase' and 'smartcase' are both on, if a pattern contains an
-"uppercase letter, it is case sensitive, otherwise, it is not. For example,
-"/The would find only The, while /the would find the or The etc.
-set smartcase
-
-" highlight search
+" dont highlight search, no incremental search
 set nohls
-
-" Make search act like search in modern browsers
-set noincsearch
+"set noincsearch
+set incsearch
 
 " Don't redraw while executing macros
 set lazyredraw 
@@ -134,100 +93,132 @@ set magic
 " show the cursor position all the time
 set ruler   
 
+" fold method syntax automatically folds functions, etc
+set foldmethod=syntax
+
 " 80 character per line
 set textwidth=80
 
 " Highlight one column after limit
 set colorcolumn=+1
 
-" for clearing search
-"nmap <silent> <leader>/ :nohlsearch<CR>
-
-" enable mouse support if we have it
-"if has('mouse')
-  "set mouse=a
-"endif
-
-"set wildmenu" enables a menu at the bottom of the vim/gvim window.
-"The meaning of "list:longest,full" is so that when you do completion in the
-"command line via tab, these events will happen:
-"1. (on the first tab) a list of completions will be shown and the command
-"will be completed to the longest common command.
-"2. (on second tab) the wildmenu will show up with all the completions that
-"were listed before.
-"To test it out, type ":spe" and then hit tab once to see 1 and hit tab 
-"again to see 2.
-set wildmenu
-set wildmode=list:longest,full
-
-" Mappings to edit .vimrc and source/save .vimrc
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-
-" Some leftover stuff that might be relvant
-"autocmd FileType make set noexpandtab softtabstop=0
+" spaces everywhere, indents are 4 spaces
+set tabstop=8
+set softtabstop=0
+set expandtab
+set shiftwidth=2
+"set shiftwidth=4 " Why does this keep resetting?
+set smarttab
 
 augroup cpp
   autocmd!
-  set tabstop=2
+  " In c++ indents are 2 spaces
   set shiftwidth=2
-  set nosmartindent
 augroup END
 
-augroup py
-  autocmd!
-  set tabstop=4
-  set shiftwidth=4
-  set nosmartindent
-augroup END
+"augroup py
+  "autocmd!
+  "" In python tab characters appear as 4 spaces, indents are 4 spaces
+  "set tabstop=4
+  "set shiftwidth=4
+"augroup END
 
-autocmd FileType cpp setlocal ts=2 sts=2 sw=2
-au FileType c,cpp setlocal comments-=:// comments+=f://
+" Don't assume I want a line comment after another line comment
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+"""""""" Custom Keys """"""""""""""
+" Set space for the leader
+let mapleader = "\\"
+nmap <space> <leader>
+vmap <space> <leader>
+
+" Escape Mappings for insert and visual modes
+inoremap jk <esc>
+vnoremap jk <esc>
+
+" Mappings to move up and down faster
+nnoremap J 10j
+nnoremap K 10k
+vnoremap J 10j
+vnoremap K 10k
+
+" Mappings to edit .vimrc/init.vim and source/save .vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Cpp stuff: nice curly braces
 inoremap {<CR> {<CR>}<Esc>ko
 
 " Clang-format
 map <C-K> :pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
 imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
 
-" =============================================================================
-" Plugin Config
-" =============================================================================
+""""""""""" Plugins """"""""""""""""""
+"" ALE
+" Use LSP linters
+" Install cquery https://github.com/cquery-project/cquery
+" Install pyls https://github.com/palantir/python-language-server
+let b:ale_linters = {'cpp': ['cquery'], 'python':['pyls']}
+let g:ale_completion_enabled = 1
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_echo_msg_error_str = '✖'
+let g:ale_echo_msg_warning_str = '⚠'
+let g:ale_echo_msg_format = '%severity% %s% [%linter%% code%]'
 
-" ===============================================
-" YouCompleteMe
-" Mapping to edit ~/.vim/.ycm_extra_conf.py
-"nnoremap <leader>ycm :vsplit ~/.vim/.ycm_extra_conf.py<cr>
-"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-nnoremap <c-]> :YcmCompleter GoTo<CR>
+" Show errors in airline status bar
+let g:airline#extensions#ale#enabled = 1
 
-" ===============================================
-" NerdTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-nnoremap <leader>ex :NERDTree <CR>
-let g:netrw_banner = 0
-let g:netrw_winsize = 20
+"" Scroll through autocomplete options with Tab
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" ===============================================
-" Remap for latex compiling
-nnoremap <leader>ll :w<CR>:!rubber --pdf --warn all %<CR>
-nnoremap <leader>lv :!mupdf %:r.pdf &<CR><CR>
+" Use Ale to jumpy to definition, etc.
+nnoremap <silent> gh :ALEHover<CR>
+nnoremap <silent> gd :ALEGoToDefinition<CR>
+nnoremap <silent> gr :ALEFindReferences<CR>
 
-" ===============================================
-" This is for airline and powerline
-" Note: If symbols don't appear install them with
-" `sudo apt install fonts-powerline` Ubuntu
-let g:airline_powerline_fonts = 1
-
-" ===============================================
 " UltiSnips
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsSnippetDirectories=
+  \ ["/home/mmmfarrell/.config/nvim/plugged/vim-snippets/UltiSnips",
+  \ "/home/mmmfarrell/.config/nvim/UltiSnips"]
+" Ctrl + j to expand snippets and Ctrl+j/Ctrl+k to move forward, back
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-"
-" ===============================================
-" Tmuxline
-let g:airline#extensions#tmuxline#enabled = 0
-let g:tmuxline_theme = 'jellybeans'
 
+" Vim-ROS
+" Open .h/.cpp in a vsplit
+command! -nargs=0 AV exec ':vsplit | A'
+
+" FZF
+" leader + f to search files
+" Ctrl+t, Ctrl+x, Ctrl+v to open in tab, split, vsplit
+nnoremap <leader>f :Files<CR>
+" leader + us (for UltiSnips) to insert a snippet
+nnoremap <leader>us :Snippets<CR>
+" Silver searcher to grep into all files in current path (ignoring .gitignore files)
+nnoremap <leader>ag :Ag<CR>
+
+" NerdTree
+" Start nerdtree if start vim with no file specified
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" Open/Close NerdTree with Ctrl + N
+map <C-n> :NERDTreeToggle<CR>
+
+" VimAirline
+" Note: If symbols don't appear install them with
+" `sudo apt install fonts-powerline` Ubuntu
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "dark"
+
+" Tmuxline
+" Note: this plugin is used to generate pretty formats for tmux that are saved
+" and then loaded by tmux on startup. That way your tmux always looks nice, not
+" just after you start vim.
+let g:airline#extensions#tmuxline#enabled = 0
+
+" Load all plugins now, generate help tags, errors and messages ignored
+packloadall
+silent! helptags ALL
