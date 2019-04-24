@@ -28,6 +28,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'edkolev/tmuxline.vim'
+Plug 'nvie/vim-flake8'
+Plug 'rhysd/vim-clang-format'
 
 call plug#end()
 
@@ -149,10 +151,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " Cpp stuff: nice curly braces
 inoremap {<CR> {<CR>}<Esc>ko
 
-" Clang-format
-map <C-K> :pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
-imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
-
 """"""""""" Plugins """"""""""""""""""
 "" ALE
 " Use LSP linters
@@ -186,6 +184,15 @@ let g:UltiSnipsSnippetDirectories=
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" Clang format
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+"autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
 
 " Vim-ROS
 " Open .h/.cpp in a vsplit

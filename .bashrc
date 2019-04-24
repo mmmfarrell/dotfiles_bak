@@ -151,8 +151,14 @@ alias gen_ctags='ctags -R -f ~/.tags ~/.'
 export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-#source ~/.rosrc
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 alias drone='ssh nvidia@192.168.1.122'
+
+export CUDA_VISIBLE_DEVICES=0
+export TMPDIR=/tmp
+
+
+#source ~/.rosrc
+
