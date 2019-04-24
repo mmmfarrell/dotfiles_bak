@@ -1,5 +1,5 @@
-# Install ROS Kinetic. Following steps from http://wiki.ros.org/kinetic/Installation/Ubuntu 
-. basic_setup.sh
+# Install ROS Melodic.
+# Following steps from http://wiki.ros.org/melodic/Installation/Ubuntu
 
 # Setup sources.list
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -9,7 +9,7 @@ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C
 
 # Update and install
 sudo apt-get update
-sudo apt-get -y install ros-kinetic-desktop-full
+sudo apt-get -y install ros-melodic-desktop-full
 
 # Initialize rosdep
 sudo rosdep init

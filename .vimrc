@@ -41,7 +41,7 @@ filetype plugin on
 filetype indent on
 
 " Always copy and paste to clipboard
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
 
 " Use xclip for clipboard
 " sudo apt install xclip
@@ -105,18 +105,22 @@ set textwidth=80
 set colorcolumn=+1
 
 " spaces everywhere, indents are 4 spaces
-set tabstop=8
-set softtabstop=0
+set tabstop=2
 set expandtab
 set shiftwidth=2
 "set shiftwidth=4 " Why does this keep resetting?
 set smarttab
 
-augroup cpp
-  autocmd!
-  " In c++ indents are 2 spaces
-  set shiftwidth=2
-augroup END
+autocmd FileType make set noexpandtab softtabstop=0
+autocmd FileType c setlocal ts=2 sw=2 expandtab
+autocmd FileType cpp setlocal ts=2 sw=2 expandtab
+autocmd FileType py setlocal ts=4 sw=4 expandtab
+
+"augroup cpp
+  "autocmd!
+  "" In c++ indents are 2 spaces
+  "set shiftwidth=2
+"augroup END
 
 "augroup py
   "autocmd!
@@ -225,6 +229,9 @@ let g:airline_theme = "dark"
 " and then loaded by tmux on startup. That way your tmux always looks nice, not
 " just after you start vim.
 let g:airline#extensions#tmuxline#enabled = 0
+
+" Make vimtex use xelatex
+let g:vimtex_view_method = 'zathura'
 
 " Load all plugins now, generate help tags, errors and messages ignored
 packloadall
